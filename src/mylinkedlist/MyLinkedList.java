@@ -134,14 +134,22 @@ public class MyLinkedList {
              }
         }
 
-        public Node delete2(int index){
-            Node temp = head;
-            int count = 0;
-            while (temp != null && count < index) {
-                count ++;
-                head = head.next;
+        public void delete2(int index) {
+            if (index == 0) {
+                deleteFirst();
+                return;
+            } else if (index == length() - 1) {
+                deleteLast();
+                return;
+            } else {
+                Node preNodeDelete = head;
+                int i = 1;
+                while (i < index) {
+                    preNodeDelete = preNodeDelete.next;
+                    i++;
+                }
+                preNodeDelete.next = preNodeDelete.next.next;
             }
-            return head;
         }
 
         //BTVN1: Viết hàm delete theo while. Hint: dùng count++;
@@ -163,26 +171,15 @@ public class MyLinkedList {
         //     return false;
         // }
         
-        // public void sort(){
-        //     int n = length();
-        //     for(int i = 0; i < n - 1; i++){
-        //         for(int j = i + 1; j < n; j++){
-        //             Node p = searchatPosition(i);
-        //             Node q = searchatPosition(j);
-        //             if(p.data > q.data){
-        //                 int temp = p.data;
-        //                 p.data = q.data;
-        //                 q.data = temp;
-        //             }
-        //         }
-        //     }
-        // }
+
 
         public void sort() {
-            if (head == null || head.next == null) return; // Kiểm tra danh sách rỗng hoặc chỉ có 1 phần tử
+            if (head == null || head.next == null){
+                return;
+            }
         
-            for (Node i = head; i != null; i = i.next) {
-                for (Node j = i.next; j != null; j = j.next) {
+            for(Node i = head; i != null; i = i.next){
+                for(Node j = i.next; j != null; j = j.next){
                     if (i.data < j.data) {  // Đổi chỗ nếu i.data < j.data
                         int temp = i.data;
                         i.data = j.data;
@@ -230,7 +227,12 @@ public class MyLinkedList {
         linkedList.delete(2);
         linkedList.display();
 
+        System.out.println("Sort:");
         linkedList.sort();
+        linkedList.display();
+
+        System.out.println("Delete2");
+        linkedList.delete2(2);
         linkedList.display();
 
     }
